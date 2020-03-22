@@ -14,12 +14,12 @@ class ItemComponent extends Component{
         this.validate = this.validate.bind(this)
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         console.log(this.state.id);
-        if(this.state.id === -1){
-            return 
-
-        }
+        /*fetch('/api/v1/item')
+        .then(response => response.json())
+        .then(data => this.setState({items: data, isLoading: false}));
+        */
         ItemDataService.retrieveItem(this.id)
         .then(response => this.setState({
             description: response.data.description
@@ -39,25 +39,32 @@ class ItemComponent extends Component{
     onSubmit(values) {
         
 
-        let Item = {
+        /*let Item = {
             id: this.state.id,
             description: values.description
             //targetDate: values.targetDate
-        }
+        } */
+        const {item} = this.state;
 
-        if (this.state.id === -1){
-            ItemDataService.updateItem( this.state.id, Item)
-                .then(() => this.props.history.push('api/v1/item'))
-        }
+         fetch('api/v1/item', {
+          method: (item.id) ? 'PUT' : 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(item),
+        });
+        this.props.history.push('/item');
 
         console.log(values);
     }
     render(){
         let { description, id } = this.state
+        //const title = <h2>{this.state.id ? 'Edit Group' : 'Add Group'}</h2>;
 
         return(
             <div>
-                <h3>Course</h3>
+                <h3>Bidding Item</h3>
                 <div className="container">
                     <Formik
                         initialValues={{ id, description }}
@@ -78,6 +85,10 @@ class ItemComponent extends Component{
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <label>Description</label>
+                                        <Field className="form-control" type="text" name="description" />
+                                    </fieldset>
+                                    <fieldset className="form-group">
+                                        <label>Reserve Price</label>
                                         <Field className="form-control" type="text" name="description" />
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>

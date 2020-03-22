@@ -22,7 +22,7 @@ class ItemsList extends Component {
   }
   bidItemClicked(id){
         console.log('update' + id)
-        this.props.history.push('api/v1/item/'+id)
+        this.props.history.push('item/'+id)
         alert('Bid place for item number: ' + id);
         
   }

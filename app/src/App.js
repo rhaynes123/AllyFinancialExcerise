@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
-import Home from './Home';
+//import Home from './Home';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ItemsList from './ItemsList';
 import ItemComponent from './ItemComponent';
@@ -13,7 +13,7 @@ class App extends Component{
   };
   bidItemClicked(id) {
     console.log('update ' + id)
-    this.props.history.push(`/api/v1//item/${id}`)
+    this.props.history.push(`/api/v1/item/${id}`)
 }
   async componentDidMount(){
     const response = await fetch('/api/v1/listitems');
@@ -31,7 +31,7 @@ class App extends Component{
                     <Switch>
                         <Route path="/" exact component={ItemsList} />
                         <Route path="/api/v1/listitems" exact component={ItemsList} />
-                        <Route path="/api/v1/items/id" component={ItemComponent} />
+                        <Route path="/api/v1/item/" component={ItemComponent} />
                     </Switch>
                 </>
             </Router>
