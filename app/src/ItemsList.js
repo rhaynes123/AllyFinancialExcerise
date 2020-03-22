@@ -20,10 +20,12 @@ class ItemsList extends Component {
       .then(response => response.json())
       .then(data => this.setState({items: data, isLoading: false}));
   }
-  bidItemClicked(id){
+  bidItemClicked(id,description){
         console.log('update' + id)
-        this.props.history.push('item/'+id)
-        alert('Bid place for item number: ' + id);
+        console.log('update' + description)
+        
+        alert('Bid place for item number: ' + id+ description);
+        this.props.history.push('api/v1/item/'+id)
         
   }
   
@@ -69,7 +71,7 @@ class ItemsList extends Component {
                                             <td>{item.id}</td>
                                             <td>{item.description}</td>
                                             <td>{"$"}{item.reservePrice}</td>
-                                            <td><button className="btn btn-warning"  onClick={() => this.bidItemClicked(item.id)}>Bid</button></td>
+                                            <td><button className="btn btn-warning"  onClick={() => this.bidItemClicked(item.id,item.description)}>Bid</button></td>
                                             
                                         </tr>
                                 )

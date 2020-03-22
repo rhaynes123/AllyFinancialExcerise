@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ItemDataService from './ItemdataService';
+//import ItemDataService from './ItemdataService';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 class ItemComponent extends Component{
     //this.bidItemClicked = this.bidItemClicked.bind(this)
@@ -10,20 +10,24 @@ class ItemComponent extends Component{
             id: this.props.match.params.id,
             description: ''
         }
+        console.log('state id '+this.state.id);
+        console.log('state props '+this.props);
+        //this.bidItemClicked = this.bidItemClicked.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
         this.validate = this.validate.bind(this)
     }
 
-    async componentDidMount(){
+     componentDidMount(){
         console.log(this.state.id);
-        /*fetch('/api/v1/item')
+        fetch('/api/v1/item/' + this.state.id)
         .then(response => response.json())
-        .then(data => this.setState({items: data, isLoading: false}));
-        */
+        .then(data => this.setState({id: data, isLoading: false}));
+        console.log(this.state.id);
+        /*
         ItemDataService.retrieveItem(this.id)
         .then(response => this.setState({
             description: response.data.description
-        }))
+        })) */
     }
     validate(values) {
         let errors = {}
