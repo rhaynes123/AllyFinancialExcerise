@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ import com.restex.RestApi.entity.Bid;
 import com.restex.RestApi.entity.Item;
 import com.restex.RestApi.repo.BidRepository;
 import com.restex.RestApi.repo.ItemRepository;
-
+@Configuration
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("api/v1")
 @RestController
@@ -52,6 +53,9 @@ public class ItemController {
     public Item createItem(@Valid @RequestBody Item item) {
         return itemrepo.save(item);
     }
+ /*	 Used the below example curl to test the mysql trigger to track the bids worked as expected.
+  *  Example Curl :curl -X PUT -H "Content-Type: application/json" -d '{"id": 1, "description": "Rare cup", "reservePrice": 35}' http://localhost:3000/api/v1/item/1
+*/
 
     @PutMapping("item/{id}")
     public ResponseEntity<Item> updatedItem(@PathVariable(value = "id") Integer itemId,
@@ -64,4 +68,5 @@ public class ItemController {
         final Item updatedItem = itemrepo.save(item);
         return ResponseEntity.ok(updatedItem);
         }
+    
 }

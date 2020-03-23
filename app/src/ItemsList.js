@@ -9,7 +9,7 @@ class ItemsList extends Component {
   constructor(props) {
     super(props);
     this.state = {items: [], isLoading: true};
-   this.bidItemClicked = this.bidItemClicked.bind(this)
+    this.bidItemClicked = this.bidItemClicked.bind(this)
    // this.remove = this.remove.bind(this);
   }
 
@@ -20,7 +20,7 @@ class ItemsList extends Component {
       .then(response => response.json())
       .then(data => this.setState({items: data, isLoading: false}));
   }
-  bidItemClicked(id,description){
+  bidItemClicked(id,description,price){
         console.log('update' + id)
         console.log('update' + description)
         
@@ -71,7 +71,7 @@ class ItemsList extends Component {
                                             <td>{item.id}</td>
                                             <td>{item.description}</td>
                                             <td>{"$"}{item.reservePrice}</td>
-                                            <td><button className="btn btn-warning"  onClick={() => this.bidItemClicked(item.id,item.description)}>Bid</button></td>
+                                            <td><button className="btn btn-warning"  onClick={() => this.bidItemClicked(item.id,item.description,item.reservePrice)}>Bid</button></td>
                                             
                                         </tr>
                                 )

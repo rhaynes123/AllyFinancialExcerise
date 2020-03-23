@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import ItemDataService from './ItemdataService';
+import ItemDataService from './ItemdataService';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 class ItemComponent extends Component{
     //this.bidItemClicked = this.bidItemClicked.bind(this)
@@ -8,7 +8,8 @@ class ItemComponent extends Component{
 
         this.state ={
             id: this.props.match.params.id,
-            description: ''
+            description: '',
+            ReservePrice: 0
         }
         console.log('state id '+this.state.id);
         console.log('state props '+this.props);
@@ -18,16 +19,20 @@ class ItemComponent extends Component{
     }
 
      componentDidMount(){
+         /*
         console.log(this.state.id);
         fetch('/api/v1/item/' + this.state.id)
         .then(response => response.json())
         .then(data => this.setState({id: data, isLoading: false}));
-        console.log(this.state.id);
-        /*
-        ItemDataService.retrieveItem(this.id)
+        console.log(this.state.id);*/
+        
+        ItemDataService.retrieveItem(1)//hard codes 1 as a test
         .then(response => this.setState({
-            description: response.data.description
-        })) */
+            id: response.data.id,
+            description: response.data.description,
+            ReservePrice: response.data.reservePrice
+        })) 
+        
     }
     validate(values) {
         let errors = {}
@@ -41,29 +46,32 @@ class ItemComponent extends Component{
 
     }
     onSubmit(values) {
-        
-
-        /*let Item = {
+        /*
+        ItemDataService.updateItem(1)
+        .then(() => this.props.history.push('/item/'+1))
+        */
+        let Item = {
             id: this.state.id,
             description: values.description
             //targetDate: values.targetDate
-        } */
-        const {item} = this.state;
+        } 
+        
+        //const {Item} = this.state;
 
-         fetch('api/v1/item', {
-          method: (item.id) ? 'PUT' : 'POST',
+         fetch(''+Item.id, { //Likely will need to re-add the api uri
+          method: (Item.id) ? 'PUT' : 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(item),
+          body: JSON.stringify(Item),
         });
-        this.props.history.push('/item');
+        //this.props.history.push('tem'+Item.id);
 
-        console.log(values);
+        console.log(values); 
     }
     render(){
-        let { description, id } = this.state
+        let {ReservePrice, description, id } = this.state
         //const title = <h2>{this.state.id ? 'Edit Group' : 'Add Group'}</h2>;
 
         return(
@@ -71,7 +79,7 @@ class ItemComponent extends Component{
                 <h3>Bidding Item</h3>
                 <div className="container">
                     <Formik
-                        initialValues={{ id, description }}
+                        initialValues={{ id, description , ReservePrice}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -89,11 +97,11 @@ class ItemComponent extends Component{
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <label>Description</label>
-                                        <Field className="form-control" type="text" name="description" />
+                                        <Field className="form-control" type="text" name="description" disabled/>
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <label>Reserve Price</label>
-                                        <Field className="form-control" type="text" name="description" />
+                                        <Field className="form-control" type="text" name="ReservePrice" />
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>
                                 </Form>
