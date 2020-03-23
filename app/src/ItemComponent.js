@@ -9,7 +9,8 @@ class ItemComponent extends Component{
         this.state ={
             id: this.props.match.params.id,
             description: '',
-            ReservePrice: 0
+            ReservePrice: 0,
+            dateAdded:''
         }
         console.log('state id '+this.state.id);
         console.log('state props '+this.props);
@@ -20,7 +21,7 @@ class ItemComponent extends Component{
 
      componentDidMount(){
          /*
-        console.log(this.state.id);
+        console.log(this.state.id);:
         fetch('/api/v1/item/' + this.state.id)
         .then(response => response.json())
         .then(data => this.setState({id: data, isLoading: false}));
@@ -30,7 +31,8 @@ class ItemComponent extends Component{
         .then(response => this.setState({
             id: response.data.id,
             description: response.data.description,
-            ReservePrice: response.data.reservePrice
+            ReservePrice: response.data.reservePrice,
+            dateAdded: response.data.dateAdded
         })) 
         
     }
@@ -52,13 +54,17 @@ class ItemComponent extends Component{
         */
         let Item = {
             id: this.state.id,
-            description: values.description
+            description: values.description,
+            ReservePrice: values.ReservePrice,
+            dateAdded: values.dateAdded
+            
             //targetDate: values.targetDate
         } 
+        console.log(Item);
         
         //const {Item} = this.state;
 
-         fetch(''+Item.id, { //Likely will need to re-add the api uri
+         fetch('/api/v1/item/'+Item.id, { //Likely will need to re-add the api uri
           method: (Item.id) ? 'PUT' : 'POST',
           headers: {
             'Accept': 'application/json',
@@ -66,12 +72,12 @@ class ItemComponent extends Component{
           },
           body: JSON.stringify(Item),
         });
-        //this.props.history.push('tem'+Item.id);
+        this.props.history.push('item'+Item.id);
 
         console.log(values); 
     }
     render(){
-        let {ReservePrice, description, id } = this.state
+        let {dateAdded,ReservePrice, description, id } = this.state
         //const title = <h2>{this.state.id ? 'Edit Group' : 'Add Group'}</h2>;
 
         return(
@@ -79,7 +85,7 @@ class ItemComponent extends Component{
                 <h3>Bidding Item</h3>
                 <div className="container">
                     <Formik
-                        initialValues={{ id, description , ReservePrice}}
+                        initialValues={{ id, description , ReservePrice,dateAdded}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}

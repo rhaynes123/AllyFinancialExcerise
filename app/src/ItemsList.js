@@ -24,7 +24,7 @@ class ItemsList extends Component {
         console.log('update' + id)
         console.log('update' + description)
         
-        alert('Bid place for item number: ' + id+ description);
+        alert('Bid place for item number: ' + id+' '+ description);
         this.props.history.push('api/v1/item/'+id)
         
   }
