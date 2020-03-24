@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ItemDataService from './ItemdataService';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
+import axios from 'axios'
 class ItemComponent extends Component{
     //this.bidItemClicked = this.bidItemClicked.bind(this)
     constructor(props){
@@ -9,7 +10,7 @@ class ItemComponent extends Component{
         this.state ={
             id: this.props.match.params.id,
             description: '',
-            ReservePrice: 0,
+            reservePrice: 0,
             dateAdded:''
         }
         console.log('state id '+this.state.id);
@@ -31,7 +32,7 @@ class ItemComponent extends Component{
         .then(response => this.setState({
             id: response.data.id,
             description: response.data.description,
-            ReservePrice: response.data.reservePrice,
+            reservePrice: response.data.reservePrice,
             dateAdded: response.data.dateAdded
         })) 
         
@@ -55,13 +56,14 @@ class ItemComponent extends Component{
         let Item = {
             id: this.state.id,
             description: values.description,
-            ReservePrice: values.ReservePrice,
+            reservePrice: values.reservePrice,
             dateAdded: values.dateAdded
             
             //targetDate: values.targetDate
         } 
         console.log(Item);
         
+//         axios.put(`http://localhost:8080/api/v1/item/`+Item.id,Item);
         //const {Item} = this.state;
 
          fetch('/api/v1/item/'+Item.id, { //Likely will need to re-add the api uri
@@ -72,12 +74,12 @@ class ItemComponent extends Component{
           },
           body: JSON.stringify(Item),
         });
-        this.props.history.push('item'+Item.id);
+        this.props.history.push('item'+Item.id); 
 
         console.log(values); 
-    }
+    } 
     render(){
-        let {dateAdded,ReservePrice, description, id } = this.state
+        let {dateAdded,reservePrice, description, id } = this.state
         //const title = <h2>{this.state.id ? 'Edit Group' : 'Add Group'}</h2>;
 
         return(
@@ -85,7 +87,7 @@ class ItemComponent extends Component{
                 <h3>Bidding Item</h3>
                 <div className="container">
                     <Formik
-                        initialValues={{ id, description , ReservePrice,dateAdded}}
+                        initialValues={{ id, description , reservePrice,dateAdded}}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
@@ -107,7 +109,7 @@ class ItemComponent extends Component{
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <label>Reserve Price</label>
-                                        <Field className="form-control" type="text" name="ReservePrice" />
+                                        <Field className="form-control" type="text" name="reservePrice" />
                                     </fieldset>
                                     <button className="btn btn-success" type="submit">Save</button>
                                 </Form>

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restex.RestApi.Exception.ResourceNotFoundException;
-import com.restex.RestApi.entity.Bid;
+//import com.restex.RestApi.entity.Bid;
 import com.restex.RestApi.entity.Item;
-import com.restex.RestApi.repo.BidRepository;
+//import com.restex.RestApi.repo.BidRepository;
 import com.restex.RestApi.repo.ItemRepository;
 @Configuration
 @CrossOrigin(origins = "http://localhost:3000")
@@ -29,7 +29,7 @@ import com.restex.RestApi.repo.ItemRepository;
 public class ItemController {
 	@Autowired
 	ItemRepository itemrepo;
-	//BidRepository	bidrepo;
+	
 
 	// 1. 
 	@GetMapping("listitems")
@@ -41,11 +41,6 @@ public class ItemController {
 		public Optional<Item> listAllById(@PathVariable(value = "id") Integer itemId) {
 			return itemrepo.findById(itemId);
 		}
-/*
-	@GetMapping("listbids")
-	public List<Bid> listAllBids() {
-		return bidrepo.findAll();
-	}*/
 
 	
 	
