@@ -3,7 +3,7 @@ import ItemDataService from './ItemdataService';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios'
 class ItemComponent extends Component{
-    //this.bidItemClicked = this.bidItemClicked.bind(this)
+   
     constructor(props){
         super(props)
 
@@ -13,20 +13,13 @@ class ItemComponent extends Component{
             reservePrice: 0,
             dateAdded:''
         }
-        console.log('state id '+this.state.id);
-        console.log('state props '+this.props);
-        //this.bidItemClicked = this.bidItemClicked.bind(this)
+        
         this.onSubmit = this.onSubmit.bind(this)
         this.validate = this.validate.bind(this)
     }
 
      componentDidMount(){
-         /*
-        console.log(this.state.id);:
-        fetch('/api/v1/item/' + this.state.id)
-        .then(response => response.json())
-        .then(data => this.setState({id: data, isLoading: false}));
-        console.log(this.state.id);*/
+        
         
         ItemDataService.retrieveItem(1)//hard codes 1 as a test
         .then(response => this.setState({
@@ -49,10 +42,7 @@ class ItemComponent extends Component{
 
     }
     onSubmit(values) {
-        /*
-        ItemDataService.updateItem(1)
-        .then(() => this.props.history.push('/item/'+1))
-        */
+        
         let Item = {
             id: this.state.id,
             description: values.description,
@@ -61,22 +51,13 @@ class ItemComponent extends Component{
             
             //targetDate: values.targetDate
         } 
-        console.log(Item);
+       
         
-//         axios.put(`http://localhost:8080/api/v1/item/`+Item.id,Item);
-        //const {Item} = this.state;
+       axios.put(`http://localhost:8080/api/v1/item/`+Item.id,Item);
 
-         fetch('/api/v1/item/'+Item.id, { //Likely will need to re-add the api uri
-          method: (Item.id) ? 'PUT' : 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(Item),
-        });
-        this.props.history.push('item'+Item.id); 
-
-        console.log(values); 
+       alert(`Bid placed on Item number: ${Item.id} for $${Item.reservePrice}`);
+       
+       
     } 
     render(){
         let {dateAdded,reservePrice, description, id } = this.state

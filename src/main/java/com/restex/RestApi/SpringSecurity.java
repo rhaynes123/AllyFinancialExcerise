@@ -9,11 +9,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 //import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -21,30 +19,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @Profile("!nosecurity")
 @EnableGlobalMethodSecurity(prePostEnabled = false)
 public class SpringSecurity extends WebSecurityConfigurerAdapter  {
-/*
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	http.requestMatcher(new AntPathRequestMatcher("/api/v1/**")).csrf().disable();
-        http.csrf().disable();
-        http.httpBasic().and().csrf().disable();
-        http.cors().and().csrf().disable();
-        
-    }
-    
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/v1/**")
-            .allowedOrigins("http://localhost:3000")
-            .allowedMethods("PUT", "GET")
-            
-            .allowCredentials(false).maxAge(3600);
-    }
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/v1/**", new CorsConfiguration().applyPermitDefaultValues());
-        return source;
-    }*/
-	
+
+	//NOTE: In general turning off csrf is not recommended doing so only for demo.
 	 @Override
 	    protected void configure(HttpSecurity http) throws Exception{
 	        http.cors().and().csrf().disable();
